@@ -8,7 +8,7 @@ public interface TodoMapper {
 
 	public List<Todo> select();
 	
-	public void insert(String title);
+	public void insert(Todo todo);
 	
 	public void delete(Integer tno);
 	

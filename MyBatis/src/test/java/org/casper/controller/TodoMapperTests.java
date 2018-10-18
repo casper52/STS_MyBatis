@@ -19,10 +19,7 @@ public class TodoMapperTests extends AbstractTests {
 		log.info(mapper.select());
 	}
 	
-	@Test
-	public void testWrite() {
-		mapper.insert("¾å");
-	}
+
 	
 	@Test
 	public void testDelete() {
@@ -32,7 +29,7 @@ public class TodoMapperTests extends AbstractTests {
 	@Test
 	public void testUpdate() {
 		Todo todo = mapper.select().get(4);
-		todo.setTitle("¾å¾ß¶ó¾å¾å");
+		todo.setTitle("ï¿½ï¿½ß¶ï¿½ï¿½ï¿½");
 		mapper.update(todo);
 	}
 
