@@ -32,7 +32,7 @@
 							<c:forEach items="${list}" var="board">
 								<tr>
 									<td><c:out value="${board.bno}" /></td>
-									<td><a href='${board.bno}' class='board'><c:out value="${board.title}" /></a></td>
+									<td><a href='${board.bno}' class = 'board' ><c:out value="${board.title}" /></a></td>
 									<td><c:out value="${board.writer}" /></td>
 									<td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH:mm:ss "/> </td>
 								</tr>
@@ -102,9 +102,17 @@
 		
 		var actionForm = $("#actionForm");
 		var pageNum = ${pageObj.page};
-		$(".board").on("click", function(){
+		
+		console.log( $(".boardClass"));
+		
+		$(".board").on("click", function(e){
+			
 			e.preventDefault();
+			
 			var bno = $(this).attr("href");
+			
+			console.log("bno: " + bno);
+			
 			actionForm.append("<input type='hidden' name='bno' value='"+bno+"'>");
 			actionForm.attr("action","/board/read").attr("method","get").submit();
 		});

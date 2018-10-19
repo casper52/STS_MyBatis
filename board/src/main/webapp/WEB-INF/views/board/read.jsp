@@ -19,17 +19,17 @@
 			<div class="panel-body">
 				<form role="form" action="/board/register" method='post'>
 					<div class="form-group">
-						<label>Title</label> <input class="form-control" name='title' <c:out value="${board.title}"/>' readonly="readonly">
+						<label>Title</label> <input class="form-control" name='title' value= '<c:out value="${board.title}"/>' readonly="readonly">
 						<p class="help-block">Example block-level help text here.</p>
 					</div>
 					<div class="form-group">
-						<label>Writer</label> <input class="form-control" name='writer'<c:out value="${board.writer}"/>' readonly="readonly">
+						<label>Writer</label> <input class="form-control" name='writer'value='<c:out value="${board.writer}"/>' readonly="readonly">
 						<p class="help-block">Example block-level help text here.</p>
 					</div>
 					
 					<div class="form-group">
 						<label>Text area</label>
-						<textarea class="form-control" rows="3" name='content'<c:out value="${board.content}"/>' readonly="readonly"></textarea>
+						<textarea class="form-control" rows="3" name='content' value='<c:out value="${board.content}"/>' readonly="readonly"></textarea>
 					</div>
 					
 					<button type="submit" class="btn btn-default">Submit
