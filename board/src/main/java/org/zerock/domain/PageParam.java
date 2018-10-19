@@ -1,5 +1,7 @@
 package org.zerock.domain;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 import lombok.Data;
 
 @Data
@@ -39,13 +41,22 @@ public class PageParam {
 		this.prev = this.start != 1;	
 	}
 	
+	public String getLink(String path) {
+		
+		return UriComponentsBuilder.fromPath(path)
+				.queryParam("bno", this.bno)
+				.queryParam("page", this.page)
+				.toUriString();
+	}
+	
 	//페이징 테스트
 	public static void main(String[] args) {
 		
 		PageParam obj = new PageParam();
-		obj.setPage(13);
-		obj.setTotal(200);
+		obj.setPage(123);
+		obj.setTotal(7);
 		
+		System.out.println(obj.getLink("redirect:/board/read"));
 		System.out.println(obj);
 	}
 }

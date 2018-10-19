@@ -135,7 +135,7 @@
 		var result = '<c:out value="${result}"/>';
 
 		if (result === 'SUCCESS') {
-			$(".modal-body").html("글 등록에 성공하였습니다.");
+			$(".modal-body").html("성공하였습니다.");
 			msg.modal("show");
 			
 		}

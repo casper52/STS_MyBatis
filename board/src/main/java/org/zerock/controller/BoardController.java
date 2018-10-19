@@ -22,11 +22,28 @@ public class BoardController {
 	
 	private BoardService service;
 
-	@GetMapping("/read")
+	@GetMapping({"/read","/modify"})
 	public void read(@ModelAttribute("pageObj") PageParam pageParam, Model model) {
 		log.info("read page...");
-		
 		model.addAttribute("board", service.get(pageParam));
+	}
+	
+	@PostMapping("/modify")
+	public String modify(PageParam pageParam, Board board,RedirectAttributes rttr) {
+		
+		rttr.addFlashAttribute("result", service.modify(board) == 1?"SUCCESS":"FAIL");
+		return pageParam.getLink("redirect:/board/read");
+	}
+	
+	@PostMapping("/remove")
+	public String remove(PageParam pageParam, RedirectAttributes rttr) {	//redirect 가 들어갈 때는 model이 들어갈 이유가 없다.
+		log.info("remove...");
+		
+		int count = service.remove(pageParam);
+		rttr.addFlashAttribute("result", count==1?"SUCCESS":"FAIL");
+		
+		return "redirect:/board/list?page="+pageParam.getPage();
+		
 	}
 	
 	@GetMapping("/list")
