@@ -40,8 +40,8 @@
 					<button type="submit" class="btn btn-default">Go List</button>
 				</form>
 				<form role="form" action="/board/modify" method='get'>
-					<input type='hidden' name='page' value="${pageObj.page}">
-					<input type='hidden' name='bno' value="${pageObj.bno}">
+					<input type='hidden' name='page' value="${pageObj.page}"> <input
+						type='hidden' name='bno' value="${pageObj.bno}">
 					<button type="submit" class="btn btn-default">Modify</button>
 				</form>
 
@@ -81,10 +81,21 @@
 		var msg = $("#myModal");
 		var result = '<c:out value="${result}"/>';
 
-		if (result === 'SUCCESS') {
-			$(".modal-body").html("성공하였습니다.");
-			msg.modal("show");
-			
+		checkModal(result);
+
+		history.replaceState({}, null, null);
+
+		function checkModal(result) {
+
+			if (result === '' || history.state) {
+				return;
+			}
+
+			if (result === 'SUCCESS') {
+				$(".modal-body").html("성공하였습니다.");
+				msg.modal("show");
+
+			}
 		}
 	});
 </script>

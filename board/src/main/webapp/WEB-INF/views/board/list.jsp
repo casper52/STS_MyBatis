@@ -134,10 +134,21 @@
 		var msg = $("#myModal");
 		var result = '<c:out value="${result}"/>';
 
+		checkModal(result);
+		
+		history.replaceState({},null,null);
+		
+		function checkModal(result){
+			
+			if(result === ''||history.state){
+				return;
+			}
+		
 		if (result === 'SUCCESS') {
 			$(".modal-body").html("성공하였습니다.");
 			msg.modal("show");
 			
+			}
 		}
 	});
 </script>
