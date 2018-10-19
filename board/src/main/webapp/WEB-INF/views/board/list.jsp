@@ -32,7 +32,7 @@
 							<c:forEach items="${list}" var="board">
 								<tr>
 									<td><c:out value="${board.bno}" /></td>
-									<td><c:out value="${board.title}" /></td>
+									<td><a href='${board.bno}' class='board'><c:out value="${board.title}" /></a></td>
 									<td><c:out value="${board.writer}" /></td>
 									<td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH:mm:ss "/> </td>
 								</tr>
@@ -52,29 +52,29 @@
 	<div class="dataTables_paginate paging_simple_numbers"
 		id="dataTables-example_paginate">
 		<ul class="pagination">
+		<c:if test="${pageObj.prev}">
 			<li class="paginate_button previous disabled"
 				aria-controls="dataTables-example" tabindex="0"
-				id="dataTables-example_previous"><a href="#">Previous</a></li>
-			<li class="paginate_button active" aria-controls="dataTables-example"
-				tabindex="0"><a href="#">1</a></li>
-			<li class="paginate_button " aria-controls="dataTables-example"
-				tabindex="0"><a href="#">2</a></li>
-			<li class="paginate_button " aria-controls="dataTables-example"
-				tabindex="0"><a href="#">3</a></li>
-			<li class="paginate_button " aria-controls="dataTables-example"
-				tabindex="0"><a href="#">4</a></li>
-			<li class="paginate_button " aria-controls="dataTables-example"
-				tabindex="0"><a href="#">5</a></li>
-			<li class="paginate_button " aria-controls="dataTables-example"
-				tabindex="0"><a href="#">6</a></li>
+				id="dataTables-example_previous"><a href="${pageObj.start-1}">Previous</a></li>
+		</c:if>
+		<c:forEach begin="${pageObj.start}" end="${pageObj.end}" var="num">
+			<li class="paginate_button" data-page='${num}' aria-controls="dataTables-example"
+				tabindex="0"><a href="${num}"><c:out value="${num}"/></a></li>
+		</c:forEach>
+		<c:if test="${pageObj.next}">
 			<li class="paginate_button next" aria-controls="dataTables-example"
-				tabindex="0" id="dataTables-example_next"><a href="#">Next</a></li>
+				tabindex="0" id="dataTables-example_next"><a href="${pageObj.end+1}">Next</a></li>
+		</c:if>
 		</ul>
 	</div>
 </div>
 
 </div>
 <!-- /#page-wrapper -->
+
+<form id='actionForm'>
+	<input type='hidden' name='page' id='page' value='${pageObj.page}'>
+</form>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -99,6 +99,29 @@
 
 <script>
 	$(document).ready(function() {
+		
+		var actionForm = $("#actionForm");
+		var pageNum = ${pageObj.page};
+		$(".board").on("click", function(){
+			e.preventDefault();
+			var bno = $(this).attr("href");
+			actionForm.append("<input type='hidden' name='bno' value='"+bno+"'>");
+			actionForm.attr("action","/board/read").attr("method","get").submit();
+		});
+		
+		$('.pagination li[data-page='+pageNum+']').addClass("active");	// 속성으로 찾을 수 있다
+		
+		$('.pagination li a').on("click",function(e){
+			
+			e.preventDefault(); //기본동작을 막아버림
+			var target = $(this).attr("href");
+			$("#page").val(target);
+			console.log(target);
+			actionForm.attr("action","/board/list").attr("method","get").submit();
+			
+			
+	
+		});
 
 		var msg = $("#myModal");
 		var result = '<c:out value="${result}"/>';

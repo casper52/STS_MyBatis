@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.Board;
+import org.zerock.domain.PageParam;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -20,9 +21,13 @@ public class BoardMapperTests {
 	
 	@Test
 	public void testAll() {
-		log.info(mapper.getListAll());
 		
-		mapper.getListAll().forEach(board -> log.info(board));
+		PageParam param = new PageParam();
+		param.setPage(3);
+		
+		log.info(mapper.getList(param));
+		
+		mapper.getList(param).forEach(board -> log.info(board));
 	}
 	
 	@Test
