@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <!-- 인터페이스와 동일하게 이름을 맞추어주어야 함. 메소드 이름은 id-->
+ <mapper namespace="org.casper.mapper.BoardMapper">
+ 
+ <select id="getList" resultType="org.casper.domain.Board">
+ 	select * from gy_board order by bno desc
+ </select>
+ 
+ <insert id="insert">
+ 	insert into gy_board (title, content, writer) values (#{title}, #{content}, #{writer})
+ </insert>
+ </mapper>
+ 
