@@ -49,7 +49,7 @@ public class PageParam {
 				.toUriString();
 	}
 	
-	//페이징 테스트
+
 	public static void main(String[] args) {
 		
 		PageParam obj = new PageParam();
