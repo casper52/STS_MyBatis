@@ -1,5 +1,7 @@
 package org.zerock.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +40,19 @@ public class BoardMapperTests {
 		board.setWriter("Gayoung");
 		
 		log.info(mapper.insert(board));
+	}
+	
+	@Test
+	public void testSearch() {
+		PageParam param = new PageParam();
+		param.setType("tc");
+		param.setKeyword("java");
+		
+		log.info(mapper.getList(param));
+		
+		mapper.getList(param).forEach(board -> log.info(board));
+		
+		log.info("-------------");
+		log.info("COUNT:" + mapper.count());
 	}
 }

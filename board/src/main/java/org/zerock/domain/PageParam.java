@@ -15,10 +15,23 @@ public class PageParam {
 	
 	private boolean prev, next;
 	
+	private String type;
+	private String keyword;
+	
+	private String types[];
 	
 	public PageParam() {
 		this.page = 1;
 		this.display = 10;
+	}
+	
+	public void setType(String type) {
+		this.type = type;
+		if(type == null || type.trim().length() == 0) {
+			this.types = null;
+			return;
+		}
+		this.types = type.split("");
 	}
 	
 	//계산을 미리 한다
@@ -48,6 +61,7 @@ public class PageParam {
 				.queryParam("page", this.page)
 				.toUriString();
 	}
+
 	
 
 	public static void main(String[] args) {

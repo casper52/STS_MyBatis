@@ -48,12 +48,29 @@
 	</div>
 	<button type="button" class="btn btn-outline btn-primary btn-lg" onclick="location.href='/board/register'">글쓰기</button>
 
+	<div class="col-sm-12">
+		  <div>
+		    <select name="type">
+		      <option value=""
+		       <c:out value="${pageObj.type == null?'selected':'' }"/>>--</option>
+		      <option value="t" <c:out value="${pageObj.type == 't'?'selected':'' }"/> >제목</option>
+		      <option value="c" <c:out value="${pageObj.type == 'c'?'selected':'' }"/> >내용</option>
+		      <option value="w" <c:out value="${pageObj.type == 'w'?'selected':'' }"/> >작성자</option>
+		      <option value="tc" <c:out value="${pageObj.type == 'tc'?'selected':'' }"/> >제목 + 내용</option>
+		      <option value="tcw" <c:out value="${pageObj.type == 'tcw'?'selected':'' }"/> >제목 + 내용 + 작성자</option>
+		    </select>
+		    <input type='text' name='keyword' value="${pageObj.keyword}">
+		    <button id="searchBtn">Search</button>
+		  </div>
+		</div>
+
 	<!-- /.col-lg-6 -->
+<div class="col-sm-12">
 	<div class="dataTables_paginate paging_simple_numbers"
 		id="dataTables-example_paginate">
 		<ul class="pagination">
 		<c:if test="${pageObj.prev}">
-			<li class="paginate_button previous disabled"
+			<li class="paginate_button previous"
 				aria-controls="dataTables-example" tabindex="0"
 				id="dataTables-example_previous"><a href="${pageObj.start-1}">Previous</a></li>
 		</c:if>
@@ -69,11 +86,13 @@
 	</div>
 </div>
 
-</div>
+
 <!-- /#page-wrapper -->
 
 <form id='actionForm'>
 	<input type='hidden' name='page' id='page' value='${pageObj.page}'>
+	<input type='hidden' name='type' value='${pageObj.type}'>
+  	<input type='hidden' name='keyword' value='${pageObj.keyword}'>
 </form>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
@@ -129,6 +148,30 @@
 			
 			
 	
+		});
+		
+			$("#searchBtn").on("click", function(e){
+			
+			var searchTypeValue = $("select[name='type'] option:selected").val();
+			console.log(searchTypeValue);
+			
+			var searchKeyword = $("input[name='keyword']").val();
+			console.log(searchKeyword);
+			
+			if(searchKeyword.trim().length == 0 ){
+				alert("검색어 없음");
+				return;
+			}
+			
+			
+			actionForm.attr("action","/board/list");
+			actionForm.find("input[name='type']").val(searchTypeValue);
+			actionForm.find("input[name='keyword']").val(searchKeyword);
+			$("#page").val(1);
+			
+			actionForm.submit();
+			
+			
 		});
 
 		var msg = $("#myModal");

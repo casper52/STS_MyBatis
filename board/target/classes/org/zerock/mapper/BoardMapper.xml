@@ -6,16 +6,46 @@
  <!-- 인터페이스와 동일하게 이름을 맞추어주어야 함. 메소드 이름은 id-->
  <mapper namespace="org.zerock.mapper.BoardMapper">
  
+ 	<sql id="search">
+ 		<if test="types !=null">
+ 			<foreach item="item" collection="types" open="and (" close=")" separator="or">
+ 				<if test="item == 't'.toString()">
+ 				title like concat('%',#{keyword},'%')
+ 				</if>
+ 				<if test="item == 'c'.toString()">
+ 				content like concat('%',#{keyword},'%')
+ 				</if>
+ 				<if test="item == 'w'.toString()">
+ 				writer like concat('%',#{keyword},'%')
+ 				</if>
+ 				
+ 			</foreach>
+ 		</if>
+ 	</sql>
+ 
     <select id="getList" resultType="org.zerock.domain.Board">
-      select * from tbl_board order by bno desc limit ${skip}, 10
+    
+     select * from tbl_board
+     where 1 = 1
+     
+     <include refid="search"></include>
+     
+     and bno > (select max(bno) - 100000 from tbl_board)
+     order by bno desc limit 0,10
+      <!-- select * from tbl_board order by bno desc limit ${skip}, 10 -->
+      
     </select>
  
-     <select id="get" resultType="org.zerock.domain.Board">
+    <select id="get" resultType="org.zerock.domain.Board">
       select * from tbl_board where bno = #{bno}
     </select>
      
     <select id="count" resultType="Integer">
       select count(*) from tbl_board
+      where 1 = 1
+      
+      <include refid="search"></include>
+      and bno > (select max(bno) - 100000 from tbl_board)
     </select>
     
     <insert id="insert">
