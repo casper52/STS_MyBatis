@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="../includes/header.jsp"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@include file="../includes/header.jsp"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +39,7 @@
 									<td><c:out value="${board.bno}" /></td>
 									<td><c:out value="${board.title}" /></td>
 									<td><c:out value="${board.writer}" /></td>
-									<td><c:out value="${board.regdate}" /></td>
+									<td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 								</tr>
 							</c:forEach>
 						</tbody>
