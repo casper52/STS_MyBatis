@@ -7,7 +7,11 @@
  <mapper namespace="org.casper.mapper.BoardMapper">
  
  <select id="getList" resultType="org.casper.domain.Board">
- 	select * from gy_board order by bno desc
+ 	select * from gy_board order by bno desc limit #{skip}, 10
+ </select>
+ 
+ <select id="count" resultType="Integer">
+ 	select count(*) from gy_board
  </select>
  
  <insert id="insert">

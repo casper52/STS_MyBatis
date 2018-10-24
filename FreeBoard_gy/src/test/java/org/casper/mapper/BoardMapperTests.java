@@ -1,6 +1,7 @@
 package org.casper.mapper;
 
 import org.casper.domain.Board;
+import org.casper.domain.PageParam;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,9 @@ public class BoardMapperTests {
 	
 	@Test
 	public void testAll() {
-		log.info(mapper.getList());
-		mapper.getList().forEach(board -> log.info(board));
+		PageParam pageParam = new PageParam();
+		log.info(mapper.getList(pageParam));
+		mapper.getList(pageParam).forEach(board -> log.info(board));
 	}
 	
 	@Test

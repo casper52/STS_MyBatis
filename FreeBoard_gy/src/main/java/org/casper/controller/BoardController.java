@@ -1,10 +1,12 @@
 package org.casper.controller;
 
 import org.casper.domain.Board;
+import org.casper.domain.PageParam;
 import org.casper.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -21,9 +23,10 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping("/list")
-	public void listAll(Model model) {
+	public void list(@ModelAttribute("pageObj") PageParam pageParam, Model model) {
 		log.info("list page....");
-		model.addAttribute("list",service.getListAll());
+		pageParam.setTotal(service.getTotal());
+		model.addAttribute("list",service.getList(pageParam));
 	}
 	
 	@GetMapping("/register")

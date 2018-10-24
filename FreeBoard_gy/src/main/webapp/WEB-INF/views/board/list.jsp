@@ -56,17 +56,25 @@
 <div class="dataTables_paginate paging_simple_numbers"
 	id="dataTables-example_paginate">
 	<ul class="pagination">
+	<c:if test="${pageObj.prev}">
 		<li class="paginate_button previous disabled"
 			aria-controls="dataTables-example" tabindex="0"
-			id="dataTables-example_previous"><a href="#">Previous</a></li>
-		<li class="paginate_button active" aria-controls="dataTables-example"
-			tabindex="0"><a href="#">1</a></li>
-
+			id="dataTables-example_previous"><a href="${pageObj.start-1}">Previous</a></li>
+	</c:if>
+	<c:forEach begin="${pageObj.start}" end="${pageObj.end}" var="num">
+		<li class="paginate_button" data-page='${num}' aria-controls="dataTables-example"
+			tabindex="0"><a href="${num}"><c:out value="${num}"/></a></li>
+	</c:forEach>
+	<c:if test="${pageObj.next}">
 		<li class="paginate_button next" aria-controls="dataTables-example"
-			tabindex="0" id="dataTables-example_next"><a href="#">Next</a></li>
+			tabindex="0" id="dataTables-example_next"><a href="${pageObj.end+1}">Next</a></li>
+	</c:if>
 	</ul>
 </div>
 
+<form id='actionForm'>
+	<input type = 'hidden' name='page' id='page'>
+</form>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -82,11 +90,29 @@
 		</div>
 		<!-- /.modal-content -->
 	</div>
+</div>
 	
 	<%@include file="../includes/footer.jsp"%>
 
 	<script>
 		$(document).ready(function() {
+			
+			//페이징
+			var actionForm = $("#actionForm");
+			var pageNum = ${pageObj.page};
+			
+			$('.pagination li[data-page='+pageNum+']').addClass("active");
+			
+			$('.pagination li a').on("click",function(e){
+				
+				e.preventDefault();
+				var target = $(this).attr("href");
+				$("#page").val(target);
+				console.log(target);
+				actionForm.attr("action","/board/list").attr("method","get").submit();
+			})
+			
+			//모달
 			var msg = $("#myModal");
 			var result = '<c:out value="${result}"/>';
 
